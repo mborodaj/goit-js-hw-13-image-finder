@@ -5,17 +5,7 @@ import * as debounce from "lodash.debounce";
 import PhotoApiServise from "./js/apiService";
 
 refs.form.addEventListener("submit", photoSearch);
-refs.loadMoreBtn.addEventListener("click", () => {
-  fetchPhotos();
-  // scrollToHandler();
-});
-
-/******************************/
-refs.checkBtn.addEventListener("click", () => {
-  apiService.fetchPhotos().then((photos) => {
-    console.log(photos);
-  });
-});
+refs.loadMoreBtn.addEventListener("click", fetchPhotos);
 
 const apiService = new PhotoApiServise();
 
