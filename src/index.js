@@ -1,11 +1,13 @@
 import css from "./css/styles.css";
 import refs from "./js/refs";
 import cardTemplate from "./templates/photoItem.hbs";
-import * as debounce from "lodash.debounce";
 import PhotoApiServise from "./js/apiService";
+import errorsNotifications from "./js/notification";
+import onImageClick from "./js/lightbox";
 
 refs.form.addEventListener("submit", photoSearch);
 refs.loadMoreBtn.addEventListener("click", fetchPhotos);
+refs.gallery.addEventListener("click", onImageClick);
 
 const apiService = new PhotoApiServise();
 
@@ -16,15 +18,17 @@ function photoSearch(e) {
   apiService.resetPage();
   clearMarkup();
   fetchPhotos();
-
-  refs.loadMoreBtn.classList.remove("is-hidden");
 }
 
 function fetchPhotos() {
   apiService
     .fetchPhotos()
-    .then((photos) => {
-      renderMarkup(photos);
+    .then(({ hits, totalHits }) => {
+      if (hits.length === 0) {
+        errorsNotifications("Nothing was found. Please specify your request!");
+      }
+      showMoreBtnHandler(totalHits);
+      renderMarkup(hits);
       scrollToHandler();
     })
     .catch(onFetchError);
@@ -39,13 +43,20 @@ function clearMarkup() {
 }
 
 function onFetchError(error) {
-  return error;
+  alert(error);
 }
 
 function scrollToHandler() {
-  // console.log(document.documentElement.offsetHeight);
   window.scrollTo({
     top: document.documentElement.scrollHeight,
     behavior: "smooth",
   });
+}
+
+function showMoreBtnHandler(totalHits) {
+  if ((apiService.page - 1) * apiService.perPage < totalHits) {
+    refs.loadMoreBtn.classList.remove("is-hidden");
+  } else {
+    refs.loadMoreBtn.classList.add("is-hidden");
+  }
 }

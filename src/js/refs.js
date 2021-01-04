@@ -3,5 +3,4 @@ export default {
   input: document.querySelector(".search-input-form"),
   gallery: document.querySelector(".gallery"),
   loadMoreBtn: document.querySelector(".show-more-btn"),
-  checkBtn: document.querySelector(".check")
 };

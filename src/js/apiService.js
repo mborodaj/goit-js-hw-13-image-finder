@@ -14,13 +14,11 @@ export default class PhotoApiServise {
     return fetch(url)
       .then((response) => response.json())
       .then(({ hits, totalHits }) => {
-        // console.log(hits);
-        console.log(
-          `Page ${this.page}`,
-          `total ${this.page * this.perPage} photos`,
-        );
         this.incrementPage();
-        return hits;
+        return { hits, totalHits };
+      })
+      .catch((error) => {
+        alert(error);
       });
   }
 
