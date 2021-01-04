@@ -54,7 +54,10 @@ function scrollToHandler() {
 }
 
 function showMoreBtnHandler(totalHits) {
-  if ((apiService.page - 1) * apiService.perPage < totalHits) {
+  if (
+    totalHits - apiService.perPage * (apiService.page - 1) >=
+    apiService.perPage
+  ) {
     refs.loadMoreBtn.classList.remove("is-hidden");
   } else {
     refs.loadMoreBtn.classList.add("is-hidden");
