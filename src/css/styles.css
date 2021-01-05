@@ -1,6 +1,7 @@
 body {
   background: black;
   color: wheat;
+  font-size: small;
 }
 
 .search-input-form {
@@ -48,7 +49,7 @@ body {
   align-items: center;
   justify-content: center;
   margin-right: 15px;
-  margin-top: 15  px;
+  margin-top: 15 px;
   margin-bottom: 5px;
 }
 

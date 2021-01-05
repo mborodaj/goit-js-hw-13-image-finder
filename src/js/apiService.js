@@ -14,7 +14,6 @@ export default class PhotoApiServise {
     return fetch(url)
       .then((response) => response.json())
       .then(({ hits, totalHits }) => {
-        this.incrementPage();
         return { hits, totalHits };
       })
       .catch((error) => {

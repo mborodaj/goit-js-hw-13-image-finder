@@ -5,22 +5,27 @@ import PhotoApiServise from "./js/apiService";
 import errorsNotifications from "./js/notification";
 import onImageClick from "./js/lightbox";
 
-refs.form.addEventListener("submit", photoSearch);
-refs.loadMoreBtn.addEventListener("click", fetchPhotos);
+refs.form.addEventListener("submit", inicialPhotoSearch);
+refs.loadMoreBtn.addEventListener("click", showMoreImages);
 refs.gallery.addEventListener("click", onImageClick);
 
 const apiService = new PhotoApiServise();
 
-function photoSearch(e) {
+function inicialPhotoSearch(e) {
   e.preventDefault();
 
   apiService.query = e.currentTarget.elements.query.value;
   apiService.resetPage();
   clearMarkup();
-  fetchPhotos();
+  createMarkup();
 }
 
-function fetchPhotos() {
+function showMoreImages() {
+  apiService.incrementPage();
+  createMarkup();
+}
+
+function createMarkup() {
   apiService
     .fetchPhotos()
     .then(({ hits, totalHits }) => {
